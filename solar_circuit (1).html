@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Günəş Paneli Sistemi - Circuit Sxemi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0e1a;
+    color: #00ff9f;
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(0,255,159,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(0,180,255,0.05) 0%, transparent 50%),
+      linear-gradient(rgba(0,255,159,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,159,0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(14px, 3vw, 22px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #00ff9f;
+    margin-bottom: 6px;
+    text-shadow: 0 0 20px rgba(0,255,159,0.6);
+  }
+
+  .subtitle {
+    font-size: 11px;
+    color: #005f3f;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+  }
+
+  .diagram-wrap {
+    background: rgba(0,20,40,0.8);
+    border: 1px solid rgba(0,255,159,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 40px rgba(0,255,159,0.1), inset 0 0 60px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 860px;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #7fffd4;
+    background: rgba(0,255,159,0.05);
+    border: 1px solid rgba(0,255,159,0.15);
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Glow animation */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  @keyframes flow {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -30; }
+  }
+  .wire-pos { animation: flow 1.2s linear infinite; }
+  .wire-neg { animation: flow 2s linear infinite reverse; }
+  .glow-pulse { animation: pulse 2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<h1>☀ Günəş Paneli Sistemi</h1>
+<div class="subtitle">SOLAR PANEL · CONTROLLER · BATTERY · LAMP — CIRCUIT DIAGRAM</div>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 820 480" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#00ff9f" opacity="0.8"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#00cfff" opacity="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Background grid lines -->
+  <line x1="0" y1="240" x2="820" y2="240" stroke="rgba(0,255,159,0.05)" stroke-width="1"/>
+  <line x1="410" y1="0" x2="410" y2="480" stroke="rgba(0,255,159,0.05)" stroke-width="1"/>
+
+  <!-- ===== SOLAR PANEL ===== -->
+  <g transform="translate(30, 120)">
+    <!-- Panel body -->
+    <rect x="0" y="0" width="130" height="160" rx="6" fill="rgba(0,30,60,0.9)" stroke="#00cfff" stroke-width="1.5" filter="url(#glow)"/>
+    <!-- Panel cells 3x4 -->
+    <g fill="rgba(0,180,255,0.15)" stroke="#00cfff" stroke-width="0.8">
+      <rect x="8"  y="8"  width="35" height="35" rx="2"/>
+      <rect x="48" y="8"  width="35" height="35" rx="2"/>
+      <rect x="88" y="8"  width="35" height="35" rx="2"/>
+      <rect x="8"  y="48" width="35" height="35" rx="2"/>
+      <rect x="48" y="48" width="35" height="35" rx="2"/>
+      <rect x="88" y="48" width="35" height="35" rx="2"/>
+      <rect x="8"  y="88" width="35" height="35" rx="2"/>
+      <rect x="48" y="88" width="35" height="35" rx="2"/>
+      <rect x="88" y="88" width="35" height="35" rx="2"/>
+      <rect x="8"  y="128" width="35" height="25" rx="2"/>
+      <rect x="48" y="128" width="35" height="25" rx="2"/>
+      <rect x="88" y="128" width="35" height="25" rx="2"/>
+    </g>
+    <!-- Diagonal lines on cells (solar cell look) -->
+    <line x1="8" y1="8" x2="43" y2="43" stroke="rgba(0,200,255,0.3)" stroke-width="0.5"/>
+    <line x1="48" y1="8" x2="83" y2="43" stroke="rgba(0,200,255,0.3)" stroke-width="0.5"/>
+    <line x1="88" y1="8" x2="123" y2="43" stroke="rgba(0,200,255,0.3)" stroke-width="0.5"/>
+    <!-- Label -->
+    <text x="65" y="175" text-anchor="middle" font-family="Share Tech Mono" font-size="11" fill="#00cfff" filter="url(#glow)">GÜNƏŞ PANELİ</text>
+    <text x="65" y="190" text-anchor="middle" font-family="Share Tech Mono" font-size="9" fill="#005f8f">12V / 50W</text>
+    <!-- + - terminals -->
+    <circle cx="28" cy="-8" r="5" fill="#ff4444" stroke="#ff6666" stroke-width="1" filter="url(#glow)"/>
+    <text x="28" y="-4" text-anchor="middle" font-size="8" fill="white" font-weight="bold">+</text>
+    <circle cx="102" cy="-8" r="5" fill="#333" stroke="#666" stroke-width="1"/>
+    <text x="102" y="-4" text-anchor="middle" font-size="8" fill="#aaa">–</text>
+  </g>
+
+  <!-- ===== SCC CONTROLLER ===== -->
+  <g transform="translate(300, 150)">
+    <rect x="0" y="0" width="160" height="130" rx="8" fill="rgba(0,20,10,0.95)" stroke="#00ff9f" stroke-width="2" filter="url(#glow)"/>
+    <!-- Inner board look -->
+    <rect x="8" y="8" width="144" height="114" rx="4" fill="rgba(0,60,30,0.3)" stroke="rgba(0,255,159,0.2)" stroke-width="0.5"/>
+    <!-- Chip -->
+    <rect x="45" y="35" width="70" height="50" rx="3" fill="rgba(0,40,20,0.8)" stroke="#00ff9f" stroke-width="1"/>
+    <text x="80" y="57" text-anchor="middle" font-family="Share Tech Mono" font-size="8" fill="#00ff9f">PWM</text>
+    <text x="80" y="70" text-anchor="middle" font-family="Share Tech Mono" font-size="8" fill="#00ff9f">CTRL</text>
+    <text x="80" y="83" text-anchor="middle" font-family="Share Tech Mono" font-size="7" fill="rgba(0,255,159,0.5)">IC-SCC30A</text>
+    <!-- LED indicators -->
+    <circle cx="20" cy="25" r="5" fill="#00ff00" opacity="0.9" filter="url(#glow2)" class="glow-pulse"/>
+    <circle cx="35" cy="25" r="5" fill="#ffaa00" opacity="0.7" class="glow-pulse"/>
+    <text x="20" y="38" text-anchor="middle" font-size="6" fill="#00ff00">CHG</text>
+    <text x="35" y="38" text-anchor="middle" font-size="6" fill="#ffaa00">BAT</text>
+    <!-- Terminals left (PV IN) -->
+    <rect x="-12" y="30" width="12" height="12" rx="2" fill="#ff4444" stroke="#ff6666" stroke-width="1"/>
+    <text x="-6" y="40" text-anchor="middle" font-size="7" fill="white">+</text>
+    <rect x="-12" y="50" width="12" height="12" rx="2" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+    <text x="-6" y="60" text-anchor="middle" font-size="8" fill="#aaa">–</text>
+    <text x="-25" y="38" text-anchor="middle" font-size="8" fill="#00cfff" transform="rotate(-90, -25, 55)">PV IN</text>
+    <!-- Terminals right (LOAD OUT) -->
+    <rect x="160" y="30" width="12" height="12" rx="2" fill="#ff4444" stroke="#ff6666" stroke-width="1"/>
+    <text x="166" y="40" text-anchor="middle" font-size="7" fill="white">+</text>
+    <rect x="160" y="50" width="12" height="12" rx="2" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+    <text x="166" y="60" text-anchor="middle" font-size="8" fill="#aaa">–</text>
+    <text x="183" y="55" text-anchor="middle" font-size="8" fill="#ffaa00" transform="rotate(90, 183, 55)">LOAD</text>
+    <!-- Terminals bottom (BAT) -->
+    <rect x="50" y="130" width="12" height="12" rx="2" fill="#ff4444" stroke="#ff6666" stroke-width="1"/>
+    <text x="56" y="140" text-anchor="middle" font-size="7" fill="white">+</text>
+    <rect x="70" y="130" width="12" height="12" rx="2" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+    <text x="76" y="140" text-anchor="middle" font-size="8" fill="#aaa">–</text>
+    <!-- Label -->
+    <text x="80" y="120" text-anchor="middle" font-family="Share Tech Mono" font-size="10" fill="#00ff9f">CONTROLLER</text>
+  </g>
+
+  <!-- ===== BATTERY ===== -->
+  <g transform="translate(295, 330)">
+    <!-- Battery body -->
+    <rect x="0" y="0" width="170" height="100" rx="6" fill="rgba(20,15,0,0.95)" stroke="#ffaa00" stroke-width="2" filter="url(#glow)"/>
+    <!-- Battery level bars -->
+    <rect x="12" y="15" width="22" height="50" rx="2" fill="rgba(255,170,0,0.8)" filter="url(#glow)"/>
+    <rect x="38" y="15" width="22" height="50" rx="2" fill="rgba(255,170,0,0.6)"/>
+    <rect x="64" y="15" width="22" height="50" rx="2" fill="rgba(255,170,0,0.3)"/>
+    <rect x="90" y="15" width="22" height="50" rx="2" fill="rgba(255,170,0,0.1)" stroke="rgba(255,170,0,0.3)" stroke-width="0.5"/>
+    <!-- Battery cap -->
+    <rect x="170" y="35" width="12" height="30" rx="2" fill="#ffaa00"/>
+    <!-- Terminals -->
+    <circle cx="30" cy="-10" r="7" fill="#ff4444" stroke="#ff6666" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="30" y="-6" text-anchor="middle" font-size="9" fill="white" font-weight="bold">+</text>
+    <circle cx="140" cy="-10" r="7" fill="#222" stroke="#555" stroke-width="1.5"/>
+    <text x="140" y="-6" text-anchor="middle" font-size="9" fill="#888">–</text>
+    <!-- Label -->
+    <text x="85" y="82" text-anchor="middle" font-family="Share Tech Mono" font-size="10" fill="#ffaa00">AKKUMULyaTOR</text>
+    <text x="85" y="95" text-anchor="middle" font-family="Share Tech Mono" font-size="8" fill="rgba(255,170,0,0.5)">12V / 45Ah AGM</text>
+  </g>
+
+  <!-- ===== LAMP / LOAD ===== -->
+  <g transform="translate(620, 145)">
+    <!-- Lamp housing -->
+    <ellipse cx="80" cy="80" rx="55" ry="55" fill="rgba(30,25,0,0.9)" stroke="#ffee00" stroke-width="1.5" filter="url(#glow)"/>
+    <!-- Light rays -->
+    <g stroke="#ffee00" stroke-width="1" opacity="0.4" class="glow-pulse">
+      <line x1="80" y1="10" x2="80" y2="0"/>
+      <line x1="116" y1="24" x2="123" y2="17"/>
+      <line x1="140" y1="60" x2="150" y2="60"/>
+      <line x1="116" y1="96" x2="123" y2="103"/>
+      <line x1="80" y1="120" x2="80" y2="130" opacity="0.2"/>
+      <line x1="44" y1="96" x2="37" y2="103"/>
+      <line x1="20" y1="60" x2="10" y2="60"/>
+      <line x1="44" y1="24" x2="37" y2="17"/>
+    </g>
+    <!-- Bulb glow -->
+    <circle cx="80" cy="60" r="30" fill="rgba(255,238,0,0.15)" filter="url(#glow2)" class="glow-pulse"/>
+    <!-- Filament symbol -->
+    <ellipse cx="80" cy="58" rx="18" ry="22" fill="none" stroke="#ffee00" stroke-width="2" filter="url(#glow)"/>
+    <path d="M72,65 Q80,50 88,65" fill="none" stroke="#ffdd00" stroke-width="1.5"/>
+    <line x1="80" y1="80" x2="80" y2="95" stroke="#ffee00" stroke-width="2"/>
+    <line x1="68" y1="95" x2="92" y2="95" stroke="#ffee00" stroke-width="2"/>
+    <!-- Screw base lines -->
+    <line x1="71" y1="98" x2="89" y2="98" stroke="#ffaa00" stroke-width="1.5"/>
+    <line x1="74" y1="102" x2="86" y2="102" stroke="#ffaa00" stroke-width="1"/>
+    <!-- Terminals -->
+    <circle cx="57" cy="120" r="6" fill="#ff4444" stroke="#ff6666" stroke-width="1.5"/>
+    <text x="57" y="124" text-anchor="middle" font-size="8" fill="white">+</text>
+    <circle cx="103" cy="120" r="6" fill="#222" stroke="#555" stroke-width="1.5"/>
+    <text x="103" y="124" text-anchor="middle" font-size="8" fill="#888">–</text>
+    <!-- Label -->
+    <text x="80" y="148" text-anchor="middle" font-family="Share Tech Mono" font-size="11" fill="#ffee00" filter="url(#glow)">LAMPA</text>
+    <text x="80" y="162" text-anchor="middle" font-family="Share Tech Mono" font-size="8" fill="rgba(255,238,0,0.5)">12V DC LED</text>
+  </g>
+
+  <!-- ===== WIRES / CONNECTIONS ===== -->
+
+  <!-- PV+ : Panel+ → Controller PV+ -->
+  <polyline points="58,112 58,80 295,80 295,185"
+    fill="none" stroke="#ff4444" stroke-width="2.5"
+    stroke-dasharray="8,4" class="wire-pos"
+    marker-end="url(#arrow)" filter="url(#glow)" opacity="0.9"/>
+  <!-- PV- : Panel- → Controller PV- -->
+  <polyline points="132,112 132,95 280,95 280,205"
+    fill="none" stroke="#555" stroke-width="2"
+    stroke-dasharray="8,4" class="wire-neg" opacity="0.7"/>
+
+  <!-- BAT+ : Controller BAT+ → Battery+ -->
+  <polyline points="356,292 356,320 325,320 325,320"
+    fill="none" stroke="#ff4444" stroke-width="2.5"
+    stroke-dasharray="8,4" class="wire-pos"
+    marker-end="url(#arrow)" filter="url(#glow)" opacity="0.9"/>
+  <!-- BAT- : Controller BAT- → Battery- -->
+  <polyline points="376,292 376,335 435,335 435,320"
+    fill="none" stroke="#555" stroke-width="2"
+    stroke-dasharray="8,4" class="wire-neg" opacity="0.7"/>
+
+  <!-- LOAD+ : Controller LOAD+ → Lamp+ -->
+  <polyline points="472,185 530,185 530,150 678,150 678,265"
+    fill="none" stroke="#ffee00" stroke-width="2.5"
+    stroke-dasharray="8,4" class="wire-pos"
+    marker-end="url(#arrow)" filter="url(#glow)" opacity="0.9"/>
+  <!-- LOAD- : Controller LOAD- → Lamp- (via bottom ground) -->
+  <polyline points="472,205 550,205 550,160 724,160 724,265"
+    fill="none" stroke="#555" stroke-width="2"
+    stroke-dasharray="8,4" class="wire-neg" opacity="0.7"/>
+
+  <!-- Ground rail at bottom -->
+  <line x1="100" y1="430" x2="720" y2="430" stroke="#444" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Ground symbols -->
+  <g transform="translate(100,430)" stroke="#444" stroke-width="1.5">
+    <line x1="0" y1="0" x2="0" y2="10"/>
+    <line x1="-12" y1="10" x2="12" y2="10"/>
+    <line x1="-8" y1="14" x2="8" y2="14"/>
+    <line x1="-4" y1="18" x2="4" y2="18"/>
+  </g>
+  <g transform="translate(720,430)" stroke="#444" stroke-width="1.5">
+    <line x1="0" y1="0" x2="0" y2="10"/>
+    <line x1="-12" y1="10" x2="12" y2="10"/>
+    <line x1="-8" y1="14" x2="8" y2="14"/>
+    <line x1="-4" y1="18" x2="4" y2="18"/>
+  </g>
+
+  <!-- ===== CONNECTION NODES (dots) ===== -->
+  <circle cx="295" cy="185" r="4" fill="#ff4444" filter="url(#glow)"/>
+  <circle cx="280" cy="205" r="4" fill="#666"/>
+  <circle cx="530" cy="185" r="4" fill="#ffee00" filter="url(#glow)"/>
+
+  <!-- ===== LABELS ON WIRES ===== -->
+  <text x="175" y="73" font-family="Share Tech Mono" font-size="9" fill="#ff4444" filter="url(#glow)">+12V (PV)</text>
+  <text x="175" y="103" font-family="Share Tech Mono" font-size="9" fill="#666">GND</text>
+  <text x="322" y="315" font-family="Share Tech Mono" font-size="9" fill="#ff4444" filter="url(#glow)">+12V</text>
+  <text x="540" y="178" font-family="Share Tech Mono" font-size="9" fill="#ffee00" filter="url(#glow)">+12V (LOAD)</text>
+
+  <!-- ===== DIODE (between panel and controller, protection) ===== -->
+  <g transform="translate(220, 72)" filter="url(#glow)">
+    <polygon points="0,0 14,7 0,14" fill="#ff4444" opacity="0.8"/>
+    <line x1="14" y1="0" x2="14" y2="14" stroke="#ff4444" stroke-width="2"/>
+    <line x1="-8" y1="7" x2="0" y2="7" stroke="#ff4444" stroke-width="2"/>
+    <line x1="14" y1="7" x2="22" y2="7" stroke="#ff4444" stroke-width="2"/>
+    <text x="7" y="24" text-anchor="middle" font-size="7" fill="#ff6666">D1</text>
+  </g>
+
+  <!-- ===== FUSE symbol ===== -->
+  <g transform="translate(190, 195)" filter="url(#glow)">
+    <rect x="0" y="-7" width="24" height="14" rx="7" fill="none" stroke="#ffaa00" stroke-width="1.5"/>
+    <line x1="-8" y1="0" x2="0" y2="0" stroke="#ffaa00" stroke-width="2"/>
+    <line x1="24" y1="0" x2="32" y2="0" stroke="#ffaa00" stroke-width="2"/>
+    <line x1="4" y1="0" x2="20" y2="0" stroke="#ffaa00" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="12" y="15" text-anchor="middle" font-size="7" fill="#ffaa00">10A</text>
+  </g>
+
+  <!-- Sun icon top right -->
+  <g transform="translate(760, 30)" opacity="0.4">
+    <circle cx="0" cy="0" r="14" fill="#ffee00" filter="url(#glow2)" class="glow-pulse"/>
+    <g stroke="#ffee00" stroke-width="1.5">
+      <line x1="0" y1="-22" x2="0" y2="-18"/>
+      <line x1="0" y1="18" x2="0" y2="22"/>
+      <line x1="-22" y1="0" x2="-18" y2="0"/>
+      <line x1="18" y1="0" x2="22" y2="0"/>
+      <line x1="-15" y1="-15" x2="-12" y2="-12"/>
+      <line x1="12" y1="-12" x2="15" y2="-15"/>
+      <line x1="-15" y1="15" x2="-12" y2="12"/>
+      <line x1="12" y1="12" x2="15" y2="15"/>
+    </g>
+  </g>
+
+  <!-- Title block bottom -->
+  <rect x="10" y="450" width="800" height="25" fill="rgba(0,255,159,0.04)" rx="3"/>
+  <text x="20" y="467" font-family="Share Tech Mono" font-size="9" fill="rgba(0,255,159,0.4)">SCHEMA: Solar PV → PWM SCC Controller → 12V AGM Battery → DC LED Lamp</text>
+  <text x="780" y="467" text-anchor="end" font-family="Share Tech Mono" font-size="9" fill="rgba(0,255,159,0.3)">REV 1.0</text>
+</svg>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#ff4444"></div>+12V Müsbət Xətt</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#555"></div>GND Mənfi Xətt</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffee00"></div>Yük (Load) Xətti</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#00cfff"></div>Günəş Paneli (PV)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffaa00"></div>Akkumulyator</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#00ff9f"></div>Controller</div>
+</div>
+
+</body>
+</html>
